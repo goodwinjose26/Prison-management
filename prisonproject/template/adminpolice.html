@@ -1,0 +1,82 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Police</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Designation</td>
+                <td><select class="form-control" name="designation" >
+                    <option disabled selected>Select designation</option>
+                    {% for i in designation %}
+                    <option value="{{i.id}}">{{i.designation}}</option>
+                    {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" class="form-control" pattern="[a-zA-Z ]+" name="txtName" required></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text"  class="form-control" name="txtAddress" required></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="text"  class="form-control" pattern="[6789][0-9]{9}" name="txtContact" required></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email"  class="form-control" name="txtEmail" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" class="btn btn-danger" value="Submit"></td>
+            </tr>
+        </table>
+        {% if data %}
+        <br<br><hr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>DESIGNATION</th>
+                <th>NAME</th>
+                <th>ADDRESS</th>
+                <th>CONTACT</th>
+                <th>EMAIL</th>
+                <th></th>
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.designation.designation}}</td>
+                <td>{{d.name}}</td>
+                <td>{{d.address}}</td>
+                <td>{{d.contact}}</td>
+                <td>{{d.email}}</td>
+                <td><a href="/adminpolicedelete?id={{d.id}}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

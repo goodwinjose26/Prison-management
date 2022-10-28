@@ -1,0 +1,55 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Parole</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Search by prisoner</td>
+                <td><input type="text" name="txtName" class="form-control" pattern="[a-zA-Z ]+"></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Search" class="btn btn-danger"></td>
+            </tr>
+        </table>
+        {% if data %}
+        <br<br><hr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>PRIOSNER</th>
+                <th>PAROLE DATE </th>
+                <th>DAYS</th>
+                
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.prisoner.name}}</td>
+                <td>{{d.pdate}}</td>
+                <td>{{d.days}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

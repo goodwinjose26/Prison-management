@@ -1,0 +1,58 @@
+{% extends 'dataadminbase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Visitor request</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+       
+        {% if data %}
+        <br<br><hr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>PRIOSNER</th>
+                <th>VISITOR </th>
+                <th>DATE OF VISIT</th>
+                <th>RELATION WITH PRISONER</th>
+                <th>PURPOSE</th>
+                <th>CARRY</th>
+                <th>STATUS</th>
+                <th colspan="2"></th>
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.prisoner.name}}</td>
+                <td>{{d.visitorname}}</td>
+                <td>{{d.vdate}}</td>
+                <td>{{d.relation}}</td>
+                <td>{{d.purpose}}</td>
+                <td>{{d.carry}}</td>
+                <td>{{d.status}}</td>
+                {% if d.status == "Requested" %}
+                <td><a href="/davisitorupdate?id={{d.id}}&status=Accepted">Accept</a></td>
+                <td><a href="/davisitorupdate?id={{d.id}}&status=Rejected">Reject</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

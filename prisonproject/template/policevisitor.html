@@ -1,0 +1,92 @@
+{% extends 'policebase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Visitor request</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Prisoner</td>
+                <td><select class="form-control" name="prisoner" >
+                    <option disabled selected>Select prisoner</option>
+                    {% for i in prisoner %}
+                    <option value="{{i.id}}">{{i.name}}</option>
+                    {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Date of visit</td>
+                <td><input type="datetime-local" class="form-control"  name="txtDate" required></td>
+            </tr>
+           
+            
+            <tr>
+                <td>Visitor name</td>
+                <td><input type="text"  class="form-control" name="txtName" required></td>
+            </tr>
+            <tr>
+                <td>Relation with prisoner</td>
+                <td><input type="text"  class="form-control" name="txtRelation" required></td>
+            </tr>
+            <tr>
+                <td>Purpose of visit</td>
+                <td><input type="text"  class="form-control" name="txtPurpose" required></td>
+            </tr>
+            <tr>
+                <td>Things carried with visitor</td>
+                <td><input type="text"  class="form-control" name="txtCarry" required></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td><input type="submit" class="btn btn-danger" value="Submit"></td>
+            </tr>
+        </table>
+        {% if data %}
+        <br<br><hr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>PRIOSNER</th>
+                <th>VISITOR </th>
+                <th>DATE OF VISIT</th>
+                <th>RELATION WITH PRISONER</th>
+                <th>PURPOSE</th>
+                <th>CARRY</th>
+                <th>STATUS</th>
+                
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.prisoner.name}}</td>
+                <td>{{d.visitorname}}</td>
+                <td>{{d.vdate}}</td>
+                <td>{{d.relation}}</td>
+                <td>{{d.purpose}}</td>
+                <td>{{d.carry}}</td>
+                <td>{{d.status}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

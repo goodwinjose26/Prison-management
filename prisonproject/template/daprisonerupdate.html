@@ -1,0 +1,90 @@
+{% extends 'dataadminbase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Prisoner</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+           
+            <tr>
+                <td>Name</td>
+                <td><input type="text" class="form-control" value="{{d.name}}" pattern="[a-zA-Z ]+" name="txtName" required></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text"  class="form-control" value="{{d.address}}" name="txtAddress" required></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="text"  class="form-control" value="{{d.contact}}" pattern="[6789][0-9]{9}" name="txtContact" required></td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td><input type="text"  class="form-control" value="{{d.place}}" name="txtPlace" required></td>
+            </tr>
+            
+            <tr>
+                <td>Height</td>
+                <td><input type="text"  class="form-control" value="{{d.height}}" name="txtHeight" required></td>
+            </tr>
+            <tr>
+                <td>Weight</td>
+                <td><input type="text"  class="form-control" value="{{d.weight}}" name="txtWeight" required></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td><input type="submit" class="btn btn-danger" value="Update"></td>
+            </tr>
+        </table>
+        {% if data %}
+        <br<br><hr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>ADDRESS</th>
+                <th>CONTACT</th>
+                <th>PLACE</th>
+                <th>GENDER</th>
+                <th>HEIGHT</th>
+                <th>WEIGHT</th>
+                <th>PHOTO</th>
+                <th colspan="2"></th>
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.name}}</td>
+                <td>{{d.address}}</td>
+                <td>{{d.contact}}</td>
+                <td>{{d.place}}</td>
+                <td>{{d.gender}}</td>
+                <td>{{d.height}}</td>
+                <td>{{d.weight}}</td>
+                <td><img src="../static/media/{{d.photo}}" height="150px" width="110px"</td>
+                <td><a href="/daprisonerupdate?id={{d.id}}">Update</a></td>
+                <td><a href="/daprisonerdelete?id={{d.id}}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

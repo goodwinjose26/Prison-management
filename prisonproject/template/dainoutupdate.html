@@ -1,0 +1,36 @@
+{% extends 'dataadminbase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>In out register</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Date of return</td>
+                <td><input type="datetime-local" class="form-control"  name="txtDate" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" class="btn btn-danger" value="Update"></td>
+            </tr>
+        </table>
+        
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

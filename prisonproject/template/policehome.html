@@ -1,0 +1,47 @@
+{% extends 'policebase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Welcome</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Designation</td>
+                <td><input type="text" class="form-control" value="{{d.designation.designation}}" name="txtDesignation" required></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" class="form-control" pattern="[a-zA-Z ]+" value="{{d.name}}" name="txtName" required></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text"  class="form-control" name="txtAddress" value="{{d.address}}" required></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="text"  class="form-control" pattern="[6789][0-9]{9}" value="{{d.contact}}" name="txtContact" required></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email"  class="form-control" name="txtEmail" value="{{d.email}}" readonly required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" class="btn btn-danger" value="Update"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

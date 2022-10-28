@@ -1,0 +1,56 @@
+{% extends 'policebase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Crime</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if data %}
+        <br<br><hr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>PRIOSNER</th>
+                <th>CELL</th>
+                <th>TITLE</th>
+                <th>CRIME DETAILS</th>
+                <th>CRIME DATE</th>
+                <th>CRIME TIME</th>
+                <th>HEARING DATE</th>
+                <th>PUNISHMENT</th>
+                <th>STATUS</th>
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.prisoner.name}}</td>
+                <td>{{d.cellno.cellno}}</td>
+                <td>{{d.crimetitle}}</td>
+                <td>{{d.crimedetails}}</td>
+                <td>{{d.crimedate}}</td>
+                <td>{{d.crimetime}}</td>
+                <td>{{d.hearingdate}}</td>
+                <td>{{d.punishment}}</td>
+                <td>{{d.crimestatus}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

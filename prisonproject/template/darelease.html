@@ -1,0 +1,63 @@
+{% extends 'dataadminbase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Release</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Prisoner</td>
+                <td><select class="form-control" name="prisoner" >
+                    <option disabled selected>Select prisoner</option>
+                    {% for i in prisoner %}
+                    <option value="{{i.id}}">{{i.name}}</option>
+                    {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Date of release</td>
+                <td><input type="date" class="form-control"  name="txtDate" required></td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td><input type="submit" class="btn btn-danger" value="Submit"></td>
+            </tr>
+        </table>
+        {% if data %}
+        <br<br><hr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>PRIOSNER</th>
+                <th>RELEASE DATE </th>
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.prisoner.name}}</td>
+                <td>{{d.reldate}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

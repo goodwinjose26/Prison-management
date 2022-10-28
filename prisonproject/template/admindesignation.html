@@ -1,0 +1,53 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color:black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <h3>Designation</h3><hr><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Designation</td>
+                <td><input type="text" class="form-control" name="txtDesig" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" class="btn btn-danger" value="Submit"></td>
+            </tr>
+        </table>
+        {% if data %}
+        <br<br><hr>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>DESIGNATION</th>
+                <th colspan="2"></th>
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.designation}}</td>
+                <td><a href="/adminupdatedesignation?id={{d.id}}">Update</a></td>
+                <td><a href="/admindeletedesignation?id={{d.id}}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </form>
+</div>
+</center>
+{% if messages %}
+    {% for msg in messages %}
+        <script>alert('{{msg}}');</script>
+    {% endfor %}
+{% endif %}
+{% endblock %}
